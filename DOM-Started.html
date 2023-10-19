@@ -26,6 +26,7 @@
       <li class="list-group-item">Item 2</li>
       <li class="list-group-item">Item 3</li>
       <li class="list-group-item">Item 4</li>
+      <li class="new-class">Item 5</li>
     </ul>
    </div>
   </div>
@@ -47,6 +48,11 @@
     var newItem = document.querySelector('.list-group');
 
     newItem.style.fontWeight = '700';
+
+    document.getElementsByTagName('li')[4].style.fontWeight = '800';
+    document.getElementsByClassName('new-class')[0].style.backgroundColor = 'skyblue';
+
+
 
 
 
