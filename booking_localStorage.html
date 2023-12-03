@@ -63,7 +63,7 @@
 <body>
     
 
-    <form id="myform" onsubmit="dataprint()" >
+    <form id="myform"  >
         <fieldset>
 
         <legend class="bookCall">
@@ -107,7 +107,11 @@
     </form>
 
     <script>
-        function dataprint(){
+
+        let form = document.getElementById("myform");
+        form.addEventListener('submit',dataprint)
+        function dataprint(e){
+           e.preventDefault();
     let name = document.getElementById("name").value;
     
 
@@ -120,18 +124,34 @@
 
     let time = document.getElementById("time").value;
 
-    let value = '(Email = ' + email + ') ,' + '(Number = ' + phone + ') ,' + '(Date = ' + date + ') ,' + '(Time = ' + time + ')' ;
+    //let value = '(Name = ' + name + ') ,' +  '(Email = ' + email + ') ,' + '(Number = ' + phone + ') ,' + '(Date = ' + date + ') ,' + '(Time = ' + time + ')' ;
 
-    document.write("Name : " + name+ "<br>") ;
-    document.write("Email : " + email +"<br>");
-    document.write("Phone : " + phone+"<br>");
-    document.write("Date : " + date+"<br>");
-    document.write("Time : " + time+"<br>");
+    //document.write("Name : " + name+ "<br>") ;
+    //document.write("Email : " + email +"<br>");
+    //document.write("Phone : " + phone+"<br>");
+    //document.write("Date : " + date+"<br>");
+    //document.write("Time : " + time+"<br>");
 
 
-    document.write( name + "==" + value);
+    //document.write( name + "==" + value);
+    let myObj = {
+        Name : name,
+        E_mail : email,
+        Phone : phone,
+        Date: date,
+        Time : time,
+    };
 
-    localStorage.setItem(name,value);
+
+    //console.log(value);
+    //console.log(myObj);
+
+    let newObj = JSON.stringify(myObj);
+
+    //console.log(newObj);
+
+    localStorage.setItem('obj',newObj);
+    //console.log(localStorage);
 }
 
 
