@@ -56,6 +56,11 @@
         height: 30px;
        }
 
+       .booking{
+        font-size: 30px;
+        font-weight: bold;
+       }
+
        
 
     </style>
@@ -106,6 +111,11 @@
         </fieldset>
     </form>
 
+    <fieldset id="bookings" class="booking">
+
+
+    </fieldset>
+
     <script>
 
         let form = document.getElementById("myform");
@@ -132,6 +142,19 @@
     //document.write("Date : " + date+"<br>");
     //document.write("Time : " + time+"<br>");
 
+    let li = document.createElement('li');
+    li.className= "booking";
+    li.appendChild(document.createTextNode('( Name = ' + name  + ')  ,'));
+    li.appendChild(document.createTextNode('( E-mail = ' + email + ')  ,'));
+    li.appendChild(document.createTextNode('( Phone = ' + phone + ')  ,'));
+    li.appendChild(document.createTextNode('( Date = ' |+ date + ')  ,'));
+    li.appendChild(document.createTextNode('( Time = ' + time + ')  ,'));
+
+    document.getElementById('bookings').appendChild(li);
+
+
+
+
 
     //document.write( name + "==" + value);
     let myObj = {
@@ -150,7 +173,7 @@
 
     //console.log(newObj);
 
-    localStorage.setItem('obj',newObj);
+    localStorage.setItem(name,newObj);
     //console.log(localStorage);
 }
 
