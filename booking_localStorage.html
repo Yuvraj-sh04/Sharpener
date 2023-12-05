@@ -57,8 +57,15 @@
        }
 
        .booking{
-        font-size: 30px;
+        font-size: 25px;
         font-weight: bold;
+        
+       }
+
+       .booking-lists{
+        margin : 0%;
+        word-break: break-word;
+        
        }
 
        
@@ -111,10 +118,7 @@
         </fieldset>
     </form>
 
-    <fieldset id="bookings" class="booking">
-
-
-    </fieldset>
+    <fieldset id="bookings" class="booking"></fieldset>
 
     <script>
 
@@ -123,16 +127,19 @@
         function dataprint(e){
            e.preventDefault();
     let name = document.getElementById("name").value;
-    
-
     let email = document.getElementById("email").value;
-    
-
     let phone = document.getElementById("phone").value;
-
     let date = document.getElementById("date").value;
-
     let time = document.getElementById("time").value;
+
+    let myObj = {
+        Name : name,
+        E_mail : email,
+        Phone : phone,
+        Date: date,
+        Time : time,
+    };
+    let newObj = JSON.stringify(myObj);
 
     //let value = '(Name = ' + name + ') ,' +  '(Email = ' + email + ') ,' + '(Number = ' + phone + ') ,' + '(Date = ' + date + ') ,' + '(Time = ' + time + ')' ;
 
@@ -143,39 +150,50 @@
     //document.write("Time : " + time+"<br>");
 
     let li = document.createElement('li');
-    li.className= "booking";
-    li.appendChild(document.createTextNode('( Name = ' + name  + ')  ,'));
-    li.appendChild(document.createTextNode('( E-mail = ' + email + ')  ,'));
-    li.appendChild(document.createTextNode('( Phone = ' + phone + ')  ,'));
-    li.appendChild(document.createTextNode('( Date = ' |+ date + ')  ,'));
-    li.appendChild(document.createTextNode('( Time = ' + time + ')  ,'));
-
+    li.className= "booking-lists";
+    li.id = "lists";
+    //li.appendChild(document.createTextNode('( Name = ' + name  + ')  ,'));
+    //li.appendChild(document.createTextNode('( E-mail = ' + email + ')  ,'));
+    //li.appendChild(document.createTextNode('( Phone = ' + phone + ')  ,'));
+    //li.appendChild(document.createTextNode('( Date = ' + date + ')  ,'));
+    //li.appendChild(document.createTextNode('( Time = ' + time + ')  '));
+    let para = document.createElement('p');
+    para.appendChild(document.createTextNode(newObj));
+    li.appendChild(para);
+    
+    let btn = document.createElement("button");
+    btn.innerText= "delete";
+    btn.type="button";
+    btn.className="delete";
+    li.appendChild(btn);
+    
     document.getElementById('bookings').appendChild(li);
 
-
-
-
-
     //document.write( name + "==" + value);
-    let myObj = {
-        Name : name,
-        E_mail : email,
-        Phone : phone,
-        Date: date,
-        Time : time,
-    };
-
-
     //console.log(value);
     //console.log(myObj);
-
-    let newObj = JSON.stringify(myObj);
-
     //console.log(newObj);
-
     localStorage.setItem(name,newObj);
     //console.log(localStorage);
 }
+
+document.getElementById('bookings').addEventListener('click', deleteItem);
+
+function deleteItem(e){
+    if(e.target.classList.contains('delete')){
+        let lit = e.target.parentElement;
+        console.log(lit.childNodes[0].innerText);
+        let Obj = JSON.parse(lit.childNodes[0].innerText);
+        console.log(Obj);
+        let key = Obj.Name;
+        console.log(key);
+        localStorage.removeItem(key);
+        document.getElementById('bookings').removeChild(lit);
+
+
+    }
+}
+
 
 
 var btn = document.getElementById('btn');
@@ -193,3 +211,4 @@ btn.addEventListener('mouseout', (e)=>{
   
 </body>
 </html>
+
