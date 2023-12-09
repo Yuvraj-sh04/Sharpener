@@ -166,9 +166,19 @@
     btn.type="button";
     btn.className="delete";
     li.appendChild(btn);
+
+    let edit = document.createElement('button');
+    edit.innerText="Edit";
+    edit.type = 'button';
+    edit.className= 'edit';
+    li.appendChild(edit);
     
     document.getElementById('bookings').appendChild(li);
-
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("phone").value = "";
+    document.getElementById("date").value = "";
+    document.getElementById("time").value = "";
     //document.write( name + "==" + value);
     //console.log(value);
     //console.log(myObj);
@@ -189,6 +199,28 @@ function deleteItem(e){
         console.log(key);
         localStorage.removeItem(key);
         document.getElementById('bookings').removeChild(lit);
+
+
+    }
+}
+
+document.getElementById('bookings').addEventListener('click',editItem);
+
+function editItem(e){
+    
+    if(e.target.classList.contains('edit')){
+        let li = e.target.parentElement;
+        let obj = JSON.parse(li.childNodes[0].innerText);
+        let key = obj.Name;
+        document.getElementById("name").value = obj.Name;
+        document.getElementById("email").value = obj.E_mail;
+        document.getElementById("phone").value = obj.Phone;
+        document.getElementById("date").value = obj.Date;
+        document.getElementById("time").value = obj.Time;
+        localStorage.removeItem(key);
+        document.getElementById('bookings').removeChild(li);
+
+
 
 
     }
