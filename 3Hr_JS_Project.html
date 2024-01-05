@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Making an Expense tracker app with local storage integration</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> 
+
+    <style>
+        .expense-tracker{
+            text-align: center;
+            font-weight: bold;
+        }
+        .container{
+            margin-top: 25px;
+        }
+        fieldset{
+        border: 5px groove;
+        padding:30px;
+        border-radius: 10px;
+        border-color: rgb(165, 42, 58);
+        margin: 5%;
+        }
+        .data{
+            list-style-type: none;
+            padding:30px;
+            font-size: larger;
+        }
+    </style>
+
+
+</head>
+<body>
+   <div class="container" id="tracker">
+    <form id="myform">
+        <fieldset>
+            <legend class="expense-tracker"> Expense Tracker</legend>
+        
+
+        <label for="price" class="form-label">Expense Amount</label>
+
+        <div class="input-group">
+            <div class="input-group-text">₹</div>
+            <input type="number" id="price"     class="form-control"> 
+
+        </div>
+
+        <label for="description" class="form-label">Expense Description</label>
+
+        <input type="text" id="description" class="form-control">
+        
+
+        <label for="expense_type" class="form-label">Expense Type</label>
+        <select class="form-select" id ="expense_type">
+            <option>Education</option>
+            <option>Health</option>
+            <option>Travel</option>
+            <option>Fun</option>
+            <option>Food</option>
+            <option>Shopping</option>
+            <option>Other</option>
+        </select>
+
+        
+        <input class="btn btn-primary" type="submit" value="Add_Expense">
+    </fieldset>
+    </form>
+   </div>
+
+    
+
+
+   </div>
+
+   
+
+    <script>
+        let form = document.getElementById("myform");
+        form.addEventListener('submit',dataStore);
+
+        function dataStore(e){
+            e.preventDefault();
+            let Amount = document.getElementById("price").value;
+            let Description = document.getElementById("description").value;
+            let Type = document.getElementById("expense_type").value;
+
+            let myObj = {
+                Expense_Amount : Amount,
+                Expense_Description : Description,
+                Expense_Type : Type,
+            };
+
+            let newObj = JSON.stringify(myObj);
+
+            let li = document.createElement('li');
+            li.className= "data";
+            li.id = "expenses";
+            let para = document.createElement('p');
+            para.appendChild(document.createTextNode(newObj));
+            li.appendChild(para);
+            //li.appendChild(document.createTextNode('( Amount = ' + Amount  + ')  , ' + '( Description = ' + Description + ')  , ' + '( Expense Type = ' + Type + ')  ,' ));
+            let btn = document.createElement("button");
+            btn.innerText= "delete";
+            btn.type="button";
+            btn.className="btn btn-dark";
+            li.appendChild(btn);
+            let edit = document.createElement('button');
+            edit.innerText="Edit";
+            edit.type = 'button';
+            edit.className= 'btn btn-info edit';
+            li.appendChild(edit);
+
+            document.getElementById("tracker").appendChild(li);
+
+            localStorage.setItem(Description,newObj);
+
+            document.getElementById("price").value = 0;
+            document.getElementById("description").value = " ";
+            document.getElementById("expense_type").value = " ";
+        }
+
+        document.getElementById("tracker").addEventListener('click', deleteItem);
+
+         function deleteItem(e){
+            
+             if(e.target.classList.contains('btn-dark')){
+                console.log("hii");
+                 let lit = e.target.parentElement;
+                 console.log(lit);
+                 console.log(lit.childNodes[0].innerText);
+                 let Obj = JSON.parse(lit.childNodes[0].innerText);
+                 console.log(Obj);
+                 let key = Obj.Expense_Description;
+                 console.log(key);
+                 localStorage.removeItem(key);
+                 document.getElementById('tracker').removeChild(lit);
+         
+         
+             }
+         }
+
+
+         document.getElementById('tracker').addEventListener('click',editItem);
+
+         function editItem(e){
+            
+            if(e.target.classList.contains('edit')){
+                let li = e.target.parentElement;
+                let obj = JSON.parse(li.childNodes[0].innerText);
+                let key = obj.Expense_Description;
+                
+                document.getElementById("price").value = obj.Expense_Amount;
+                 document.getElementById("description").value = obj.Expense_Description;
+                 document.getElementById("expense_type").value = obj.Expense_Type;
+
+                 localStorage.removeItem(key);
+                 document.getElementById('tracker').removeChild(li);
+
+
+
+    }
+}
+    </script>
+    
+</body>
+</html>
