@@ -120,6 +120,8 @@
 
     <fieldset id="bookings" class="booking"></fieldset>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"></script>
+
     <script>
 
         let form = document.getElementById("myform");
@@ -139,6 +141,10 @@
         Date: date,
         Time : time,
     };
+
+    axios.post('https://crudcrud.com/api/9bd800cfd11c45f1ac1f00da4a867702/applications', myObj).then(response => {console.log(response)}).catch((err =>{console.log(err)}))
+
+
     let newObj = JSON.stringify(myObj);
 
     //let value = '(Name = ' + name + ') ,' +  '(Email = ' + email + ') ,' + '(Number = ' + phone + ') ,' + '(Date = ' + date + ') ,' + '(Time = ' + time + ')' ;
@@ -183,7 +189,7 @@
     //console.log(value);
     //console.log(myObj);
     //console.log(newObj);
-    localStorage.setItem(name,newObj);
+    //localStorage.setItem(name,newObj); 
     //console.log(localStorage);
 }
 
@@ -192,6 +198,7 @@ document.getElementById('bookings').addEventListener('click', deleteItem);
 function deleteItem(e){
     if(e.target.classList.contains('delete')){
         let lit = e.target.parentElement;
+        console.log(lit);
         console.log(lit.childNodes[0].innerText);
         let Obj = JSON.parse(lit.childNodes[0].innerText);
         console.log(Obj);
@@ -212,6 +219,7 @@ function editItem(e){
         let li = e.target.parentElement;
         let obj = JSON.parse(li.childNodes[0].innerText);
         let key = obj.Name;
+        
         document.getElementById("name").value = obj.Name;
         document.getElementById("email").value = obj.E_mail;
         document.getElementById("phone").value = obj.Phone;
