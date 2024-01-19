@@ -144,8 +144,33 @@
 
     axios.post('https://crudcrud.com/api/9bd800cfd11c45f1ac1f00da4a867702/applications', myObj).then(response => {console.log(response)}).catch((err =>{console.log(err)}))
 
+   axios.get('https://crudcrud.com/api/9bd800cfd11c45f1ac1f00da4a867702/applications').then((response)=>{
+    console.log(response);
+    for(var i=0; i<response.data.length; i++){
+        let li = document.createElement('li');
+        li.className= "booking-lists";
+        li.id = "lists";
 
-    let newObj = JSON.stringify(myObj);
+        let para = document.createElement('p');
+        para.appendChild(document.createTextNode(JSON.stringify(response.data[i])));
+        li.appendChild(para);
+    
+        let btn = document.createElement("button");
+        btn.innerText= "delete";
+        btn.type="button";
+        btn.className="delete";
+        li.appendChild(btn);
+
+        let edit = document.createElement('button');
+        edit.innerText="Edit";
+        edit.type = 'button';
+        edit.className= 'edit';
+        li.appendChild(edit);
+
+        document.getElementById('bookings').appendChild(li);
+    }
+   }).catch((err =>{console.log(err)}))
+    //let newObj = JSON.stringify(myObj);
 
     //let value = '(Name = ' + name + ') ,' +  '(Email = ' + email + ') ,' + '(Number = ' + phone + ') ,' + '(Date = ' + date + ') ,' + '(Time = ' + time + ')' ;
 
@@ -155,31 +180,31 @@
     //document.write("Date : " + date+"<br>");
     //document.write("Time : " + time+"<br>");
 
-    let li = document.createElement('li');
-    li.className= "booking-lists";
-    li.id = "lists";
+    // let li = document.createElement('li');
+    // li.className= "booking-lists";
+    // li.id = "lists";
     //li.appendChild(document.createTextNode('( Name = ' + name  + ')  ,'));
     //li.appendChild(document.createTextNode('( E-mail = ' + email + ')  ,'));
     //li.appendChild(document.createTextNode('( Phone = ' + phone + ')  ,'));
     //li.appendChild(document.createTextNode('( Date = ' + date + ')  ,'));
     //li.appendChild(document.createTextNode('( Time = ' + time + ')  '));
-    let para = document.createElement('p');
-    para.appendChild(document.createTextNode(newObj));
-    li.appendChild(para);
+    // let para = document.createElement('p');
+    // para.appendChild(document.createTextNode(newObj));
+    // li.appendChild(para);
     
-    let btn = document.createElement("button");
-    btn.innerText= "delete";
-    btn.type="button";
-    btn.className="delete";
-    li.appendChild(btn);
+    // let btn = document.createElement("button");
+    // btn.innerText= "delete";
+    // btn.type="button";
+    // btn.className="delete";
+    // li.appendChild(btn);
 
-    let edit = document.createElement('button');
-    edit.innerText="Edit";
-    edit.type = 'button';
-    edit.className= 'edit';
-    li.appendChild(edit);
+    // let edit = document.createElement('button');
+    // edit.innerText="Edit";
+    // edit.type = 'button';
+    // edit.className= 'edit';
+    // li.appendChild(edit);
     
-    document.getElementById('bookings').appendChild(li);
+    // document.getElementById('bookings').appendChild(li);
     document.getElementById("name").value = "";
     document.getElementById("email").value = "";
     document.getElementById("phone").value = "";
