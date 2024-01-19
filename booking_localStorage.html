@@ -218,18 +218,47 @@
     //console.log(localStorage);
 }
 
+window.addEventListener('DOMContentLoaded', ()=> {
+    axios.get('https://crudcrud.com/api/9bd800cfd11c45f1ac1f00da4a867702/applications').then((response)=>{
+    console.log(response);
+    for(var i=0; i<response.data.length; i++){
+        let li = document.createElement('li');
+        li.className= "booking-lists";
+        li.id = "lists";
+
+        let para = document.createElement('p');
+        para.appendChild(document.createTextNode(JSON.stringify(response.data[i])));
+        li.appendChild(para);
+    
+        let btn = document.createElement("button");
+        btn.innerText= "delete";
+        btn.type="button";
+        btn.className="delete";
+        li.appendChild(btn);
+
+        let edit = document.createElement('button');
+        edit.innerText="Edit";
+        edit.type = 'button';
+        edit.className= 'edit';
+        li.appendChild(edit);
+
+        document.getElementById('bookings').appendChild(li);
+    }
+   }).catch((err =>{console.log(err)}))
+})
 document.getElementById('bookings').addEventListener('click', deleteItem);
 
 function deleteItem(e){
     if(e.target.classList.contains('delete')){
         let lit = e.target.parentElement;
-        console.log(lit);
-        console.log(lit.childNodes[0].innerText);
+        //console.log(lit);
+        //console.log(lit.childNodes[0].innerText);
         let Obj = JSON.parse(lit.childNodes[0].innerText);
-        console.log(Obj);
-        let key = Obj.Name;
+        //console.log(Obj);
+        let key = Obj._id;
         console.log(key);
-        localStorage.removeItem(key);
+        //localStorage.removeItem(key);
+        axios.delete(`https://crudcrud.com/api/9bd800cfd11c45f1ac1f00da4a867702/applications/${key}`).then(response => {console.log(response)}).catch((err =>{console.log(err)}))
         document.getElementById('bookings').removeChild(lit);
 
 
