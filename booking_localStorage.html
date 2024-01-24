@@ -1,121 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Booking Appointment</title>
-    
-    <style>
-        body{
-            margin: 0px;
-            border: 5px;
-            border-radius: 15px;
-            border-style: ridge;
-            border-color: bisque;
-            background-image: url(backgroung.jpg);
-            background-size: auto ;
-            color: white;
-        }
 
-        fieldset{
-            
-            
+    <style>
+      body {
+        margin: 0px;
+        border: 5px;
+        border-radius: 15px;
+        border-style: ridge;
+        border-color: bisque;
+        background-image: url(backgroung.jpg);
+        background-size: auto;
+        color: white;
+      }
+
+      fieldset {
         border: 5px groove;
         border-radius: 10px;
         border-color: rgb(42, 165, 149);
         margin: 5%;
-        
-        
-       }
+      }
 
-        .yuvi{
-            margin-top: 10px;
-            margin-bottom: 10px;
-            font-weight: bold;
-            font-size:25px ;
-            
-        }
+      .yuvi {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        font-weight: bold;
+        font-size: 25px;
+      }
 
-      
-
-       .bookCall{
+      .bookCall {
         text-align: center;
         font-size: 30px;
         font-weight: bold;
-       }
+      }
 
-       .intro{
+      .intro {
         text-align: center;
-        font-size:25px;
-        font-weight: bold;
-        margin-bottom: 35px;
-       }
-
-       input[type=text]{
-        width: 100%;
-        height: 30px;
-       }
-
-       .booking{
         font-size: 25px;
         font-weight: bold;
-        
-       }
+        margin-bottom: 35px;
+      }
 
-       .booking-lists{
-        margin : 0%;
+      input[type="text"] {
+        width: 100%;
+        height: 30px;
+      }
+
+      .booking {
+        font-size: 25px;
+        font-weight: bold;
+      }
+
+      .booking-lists {
+        margin: 0%;
         word-break: break-word;
-        
-       }
-
-       
-
+      }
     </style>
-</head>
-<body>
-    
+  </head>
+  <body>
+    <form id="myform">
+      <fieldset id="form-fieldset">
+        <legend class="bookCall">Book a Call</legend>
 
-    <form id="myform"  >
-        <fieldset>
+        <p class="intro">Book a call for travelling to mountains</p>
 
-        <legend class="bookCall">
-            Book a Call
-        </legend>
-
-        <p class="intro">
-            Book a call for travelling to mountains
-        </p>
-
-        <hr>
+        <hr />
 
         <label for="name" class="yuvi"> Name : </label>
-        <div >
-        <input type="text" class="yuvi" name="myname" id="name">
+        <div>
+          <input type="text" class="yuvi" name="myname" id="name" />
         </div>
 
-        <label for="email"class="yuvi">Email-Id : </label>
-        <div >
-        <input type="email" name="myEmail" class="yuvi" id="email">
+        <label for="email" class="yuvi">Email-Id : </label>
+        <div>
+          <input type="email" name="myEmail" class="yuvi" id="email" />
         </div>
 
-        <label for="phone"class="yuvi">Phone : </label>
-        <div >
-        <input type="text" name="myPhone" class="yuvi" id="phone">
+        <label for="phone" class="yuvi">Phone : </label>
+        <div>
+          <input type="text" name="myPhone" class="yuvi" id="phone" />
         </div>
 
         <label class="yuvi" for="date">Date : </label>
         <label class="yuvi" for="time">Time : </label>
         <div>
-            <input type="date" class="yuvi" id="date">
-            <input type="time" class="yuvi" id="time">
+          <input type="date" class="yuvi" id="date" />
+          <input type="time" class="yuvi" id="time" />
         </div>
 
-        
-        <input id="btn" class="yuvi" type="submit" value="SUBMIT">
-        <input  type="reset" class="yuvi" value="RESET">
-        
-
-        </fieldset>
+        <input id="btn" class="yuvi" type="submit" value="SUBMIT" />
+        <input type="reset" class="yuvi" value="RESET" />
+      </fieldset>
     </form>
 
     <fieldset id="bookings" class="booking"></fieldset>
@@ -123,186 +101,264 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"></script>
 
     <script>
+      let form = document.getElementById("myform");
+      form.addEventListener("submit", dataprint);
+      function dataprint(e) {
+        e.preventDefault();
 
-        let form = document.getElementById("myform");
-        form.addEventListener('submit',dataprint)
-        function dataprint(e){
-           e.preventDefault();
-    let name = document.getElementById("name").value;
-    let email = document.getElementById("email").value;
-    let phone = document.getElementById("phone").value;
-    let date = document.getElementById("date").value;
-    let time = document.getElementById("time").value;
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let phone = document.getElementById("phone").value;
+        let date = document.getElementById("date").value;
+        let time = document.getElementById("time").value;
 
-    let myObj = {
-        Name : name,
-        E_mail : email,
-        Phone : phone,
-        Date: date,
-        Time : time,
-    };
+        let myObj = {
+          Name: name,
+          E_mail: email,
+          Phone: phone,
+          Date: date,
+          Time: time,
+        };
 
-    axios.post('https://crudcrud.com/api/9bd800cfd11c45f1ac1f00da4a867702/applications', myObj).then(response => {console.log(response)}).catch((err =>{console.log(err)}))
+        axios
+          .post(
+            "https://crudcrud.com/api/82220bb09eb24ee396706b461d53afd3/applications",
+            myObj
+          )
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
 
-   axios.get('https://crudcrud.com/api/9bd800cfd11c45f1ac1f00da4a867702/applications').then((response)=>{
-    console.log(response);
-    for(var i=0; i<response.data.length; i++){
-        let li = document.createElement('li');
-        li.className= "booking-lists";
-        li.id = "lists";
+        axios
+          .get(
+            "https://crudcrud.com/api/82220bb09eb24ee396706b461d53afd3/applications"
+          )
+          .then((response) => {
+            console.log(response);
 
-        let para = document.createElement('p');
-        para.appendChild(document.createTextNode(JSON.stringify(response.data[i])));
-        li.appendChild(para);
-    
-        let btn = document.createElement("button");
-        btn.innerText= "delete";
-        btn.type="button";
-        btn.className="delete";
-        li.appendChild(btn);
+            let li = document.createElement("li");
+            li.className = "booking-lists";
+            li.id = "lists";
 
-        let edit = document.createElement('button');
-        edit.innerText="Edit";
-        edit.type = 'button';
-        edit.className= 'edit';
-        li.appendChild(edit);
+            let para = document.createElement("p");
+            para.appendChild(
+              document.createTextNode(
+                JSON.stringify(response.data[response.data.length - 1])
+              )
+            );
+            li.appendChild(para);
 
-        document.getElementById('bookings').appendChild(li);
-    }
-   }).catch((err =>{console.log(err)}))
-    //let newObj = JSON.stringify(myObj);
+            let btn = document.createElement("button");
+            btn.innerText = "delete";
+            btn.type = "button";
+            btn.className = "delete";
+            li.appendChild(btn);
 
-    //let value = '(Name = ' + name + ') ,' +  '(Email = ' + email + ') ,' + '(Number = ' + phone + ') ,' + '(Date = ' + date + ') ,' + '(Time = ' + time + ')' ;
+            let edit = document.createElement("button");
+            edit.innerText = "Edit";
+            edit.type = "button";
+            edit.className = "edit";
+            li.appendChild(edit);
 
-    //document.write("Name : " + name+ "<br>") ;
-    //document.write("Email : " + email +"<br>");
-    //document.write("Phone : " + phone+"<br>");
-    //document.write("Date : " + date+"<br>");
-    //document.write("Time : " + time+"<br>");
+            document.getElementById("bookings").appendChild(li);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
 
-    // let li = document.createElement('li');
-    // li.className= "booking-lists";
-    // li.id = "lists";
-    //li.appendChild(document.createTextNode('( Name = ' + name  + ')  ,'));
-    //li.appendChild(document.createTextNode('( E-mail = ' + email + ')  ,'));
-    //li.appendChild(document.createTextNode('( Phone = ' + phone + ')  ,'));
-    //li.appendChild(document.createTextNode('( Date = ' + date + ')  ,'));
-    //li.appendChild(document.createTextNode('( Time = ' + time + ')  '));
-    // let para = document.createElement('p');
-    // para.appendChild(document.createTextNode(newObj));
-    // li.appendChild(para);
-    
-    // let btn = document.createElement("button");
-    // btn.innerText= "delete";
-    // btn.type="button";
-    // btn.className="delete";
-    // li.appendChild(btn);
+        //let newObj = JSON.stringify(myObj);
 
-    // let edit = document.createElement('button');
-    // edit.innerText="Edit";
-    // edit.type = 'button';
-    // edit.className= 'edit';
-    // li.appendChild(edit);
-    
-    // document.getElementById('bookings').appendChild(li);
-    document.getElementById("name").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("phone").value = "";
-    document.getElementById("date").value = "";
-    document.getElementById("time").value = "";
-    //document.write( name + "==" + value);
-    //console.log(value);
-    //console.log(myObj);
-    //console.log(newObj);
-    //localStorage.setItem(name,newObj); 
-    //console.log(localStorage);
-}
+        //let value = '(Name = ' + name + ') ,' +  '(Email = ' + email + ') ,' + '(Number = ' + phone + ') ,' + '(Date = ' + date + ') ,' + '(Time = ' + time + ')' ;
 
-window.addEventListener('DOMContentLoaded', ()=> {
-    axios.get('https://crudcrud.com/api/9bd800cfd11c45f1ac1f00da4a867702/applications').then((response)=>{
-    console.log(response);
-    for(var i=0; i<response.data.length; i++){
-        let li = document.createElement('li');
-        li.className= "booking-lists";
-        li.id = "lists";
+        //document.write("Name : " + name+ "<br>") ;
+        //document.write("Email : " + email +"<br>");
+        //document.write("Phone : " + phone+"<br>");
+        //document.write("Date : " + date+"<br>");
+        //document.write("Time : " + time+"<br>");
 
-        let para = document.createElement('p');
-        para.appendChild(document.createTextNode(JSON.stringify(response.data[i])));
-        li.appendChild(para);
-    
-        let btn = document.createElement("button");
-        btn.innerText= "delete";
-        btn.type="button";
-        btn.className="delete";
-        li.appendChild(btn);
+        // let li = document.createElement('li');
+        // li.className= "booking-lists";
+        // li.id = "lists";
+        //li.appendChild(document.createTextNode('( Name = ' + name  + ')  ,'));
+        //li.appendChild(document.createTextNode('( E-mail = ' + email + ')  ,'));
+        //li.appendChild(document.createTextNode('( Phone = ' + phone + ')  ,'));
+        //li.appendChild(document.createTextNode('( Date = ' + date + ')  ,'));
+        //li.appendChild(document.createTextNode('( Time = ' + time + ')  '));
+        // let para = document.createElement('p');
+        // para.appendChild(document.createTextNode(newObj));
+        // li.appendChild(para);
 
-        let edit = document.createElement('button');
-        edit.innerText="Edit";
-        edit.type = 'button';
-        edit.className= 'edit';
-        li.appendChild(edit);
+        // let btn = document.createElement("button");
+        // btn.innerText= "delete";
+        // btn.type="button";
+        // btn.className="delete";
+        // li.appendChild(btn);
 
-        document.getElementById('bookings').appendChild(li);
-    }
-   }).catch((err =>{console.log(err)}))
-})
-document.getElementById('bookings').addEventListener('click', deleteItem);
+        // let edit = document.createElement('button');
+        // edit.innerText="Edit";
+        // edit.type = 'button';
+        // edit.className= 'edit';
+        // li.appendChild(edit);
 
-function deleteItem(e){
-    if(e.target.classList.contains('delete')){
-        let lit = e.target.parentElement;
-        //console.log(lit);
-        //console.log(lit.childNodes[0].innerText);
-        let Obj = JSON.parse(lit.childNodes[0].innerText);
-        //console.log(Obj);
-        let key = Obj._id;
-        console.log(key);
-        //localStorage.removeItem(key);
-        axios.delete(`https://crudcrud.com/api/9bd800cfd11c45f1ac1f00da4a867702/applications/${key}`).then(response => {console.log(response)}).catch((err =>{console.log(err)}))
-        document.getElementById('bookings').removeChild(lit);
+        // document.getElementById('bookings').appendChild(li);
+        document.getElementById("name").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("phone").value = "";
+        document.getElementById("date").value = "";
+        document.getElementById("time").value = "";
+        //document.write( name + "==" + value);
+        //console.log(value);
+        //console.log(myObj);
+        //console.log(newObj);
+        //localStorage.setItem(name,newObj);
+        //console.log(localStorage);
+      }
 
+      window.addEventListener("DOMContentLoaded", () => {
+        axios
+          .get(
+            "https://crudcrud.com/api/82220bb09eb24ee396706b461d53afd3/applications"
+          )
+          .then((response) => {
+            console.log(response);
+            for (var i = 0; i < response.data.length; i++) {
+              let li = document.createElement("li");
+              li.className = "booking-lists";
+              li.id = "lists";
 
-    }
-}
+              let para = document.createElement("p");
+              para.appendChild(
+                document.createTextNode(JSON.stringify(response.data[i]))
+              );
+              li.appendChild(para);
 
-document.getElementById('bookings').addEventListener('click',editItem);
+              let btn = document.createElement("button");
+              btn.innerText = "delete";
+              btn.type = "button";
+              btn.className = "delete";
+              li.appendChild(btn);
 
-function editItem(e){
-    
-    if(e.target.classList.contains('edit')){
-        let li = e.target.parentElement;
-        let obj = JSON.parse(li.childNodes[0].innerText);
-        let key = obj.Name;
-        
-        document.getElementById("name").value = obj.Name;
-        document.getElementById("email").value = obj.E_mail;
-        document.getElementById("phone").value = obj.Phone;
-        document.getElementById("date").value = obj.Date;
-        document.getElementById("time").value = obj.Time;
-        localStorage.removeItem(key);
-        document.getElementById('bookings').removeChild(li);
+              let edit = document.createElement("button");
+              edit.innerText = "Edit";
+              edit.type = "button";
+              edit.className = "edit";
+              li.appendChild(edit);
 
+              document.getElementById("bookings").appendChild(li);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+      document.getElementById("bookings").addEventListener("click", deleteItem);
 
+      function deleteItem(e) {
+        if (e.target.classList.contains("delete")) {
+          let lit = e.target.parentElement;
+          //console.log(lit);
+          //console.log(lit.childNodes[0].innerText);
+          let Obj = JSON.parse(lit.childNodes[0].innerText);
+          //console.log(Obj);
+          let key = Obj._id;
+          console.log(key);
+          //localStorage.removeItem(key);
+          axios
+            .delete(
+              `https://crudcrud.com/api/82220bb09eb24ee396706b461d53afd3
+/applications/${key}`
+            )
+            .then((response) => {
+              console.log(response);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          document.getElementById("bookings").removeChild(lit);
+        }
+      }
 
+      document.getElementById("bookings").addEventListener("click", editItem);
 
-    }
-}
+      function editItem(e) {
+        if (e.target.classList.contains("edit")) {
+          let li = e.target.parentElement;
+          let obj = JSON.parse(li.childNodes[0].innerText);
+          console.log(obj);
+          let key = obj._id;
 
+          document.getElementById("name").value = obj.Name;
+          document.getElementById("email").value = obj.E_mail;
+          document.getElementById("phone").value = obj.Phone;
+          document.getElementById("date").value = obj.Date;
+          document.getElementById("time").value = obj.Time;
+          //localStorage.removeItem(key);
+          //document.getElementById('bookings').removeChild(li);
 
+          let form = document.getElementById("form-fieldset");
 
-var btn = document.getElementById('btn');
+          let btn = document.createElement("INPUT");
+          btn.value = "EDIT";
+          btn.type = "button";
+          btn.id = "edit-btn";
+          btn.className = "yuvi";
+          //btn.className = "putEdit";
+          form.appendChild(btn);
 
-btn.addEventListener('mouseover', (e)=>{
-    document.querySelector("#myform").style.background = 'blue';
-})
+          //form.addEventListener("submit", dataprint);
 
-btn.addEventListener('mouseout', (e)=>{
-    document.querySelector("#myform").style.background = 'none';
-})
+          let edit_btn = document.getElementById("edit-btn");
+          edit_btn.addEventListener("click", dataEdit);
 
+          function dataEdit(e) {
+            if (e.target.classList.contains("yuvi")) {
+              let name = document.getElementById("name").value;
+              let email = document.getElementById("email").value;
+              let phone = document.getElementById("phone").value;
+              let date = document.getElementById("date").value;
+              let time = document.getElementById("time").value;
 
-    </script> 
-  
-</body>
+              let myObj = {
+                Name: name,
+                E_mail: email,
+                Phone: phone,
+                Date: date,
+                Time: time,
+              };
+              axios
+                .put(
+                  `https://crudcrud.com/api/82220bb09eb24ee396706b461d53afd3/applications/${key}`,
+                  myObj
+                )
+                .then((response) => {
+                  console.log(response);
+                  let edit_btn = document.getElementById("edit-btn");
+                  let form = document
+                    .getElementById("form-fieldset")
+                    .removeChild(edit_btn);
+                    
+                 location.reload();
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            }
+          }
+        }
+      }
+
+      var btn = document.getElementById("btn");
+
+      btn.addEventListener("mouseover", (e) => {
+        document.querySelector("#myform").style.background = "blue";
+      });
+
+      btn.addEventListener("mouseout", (e) => {
+        document.querySelector("#myform").style.background = "none";
+      });
+    </script>
+  </body>
 </html>
-
