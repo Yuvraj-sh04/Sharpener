@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3 hours JS Project (Integrating REST API)</title>
+
+    <style>
+        .title {
+            text-align: center;
+            border: 5px;
+            border-style: groove;
+        }
+
+        input[type="text"] {
+        width: 80%;
+        height: 30px;
+      }
+
+      .area {
+        text-align: center;
+        font-size: 30px;
+        font-weight: bold;
+      }
+
+      .notes-list {
+        margin: 0%;
+        word-break: break-word;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="title">
+      <h1>NoteBook</h1>
+
+      <div class="search">
+        <form id="searchForm">
+        <label for="searchInput" class="search-input"> Search Notes </label>
+        <div>
+          <input type="text" class="search-input"  id="searchInput" />
+        </div>
+        <div>
+            <input id="searchBtn" class="yuvi" type="submit" value="SEARCH" />
+        </div>
+        </form>
+        <h5>Total Notes : <h5 id="totalNotes"></h3> </h3>
+        <h5>Showing : <h5 id="showing"></h3> </h3>
+      </div>
+    </div>
+
+    <div>
+        <form id="myForm">
+            <fieldset id="form-fieldset">
+                <legend class="area">Enter your Notes</legend>
+
+                <div>
+                    <label for="noteTitle" class="note-title">Note Title</label>
+                    <div>
+                    <input type = "text" class="note-title" id="noteTitle"/>
+                    </div>
+                    
+                </div>
+
+                <div>
+                    <label for="noteDescription" 
+                    class="note-Description">Note Description</label>
+                    <div>
+                    <input type = "text" class="note-Description" id="noteDescription"/>
+                    </div>
+                </div>
+
+                <div>
+                    <input id="btn" class="yuvi" type="submit" value="SUBMIT" />
+                </div>
+
+
+            </fieldset>
+
+            
+        </form>
+    </div>
+
+    <div>
+        <fieldset>
+            <h1 class="title" >Notes</h1>
+
+            <div id="allNotes"></div>
+
+        </fieldset>
+    </div>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"></script>
+
+
+    <script>
+        let form = document.getElementById("myForm");
+        form.addEventListener('submit', getDataPrint);
+
+        function getDataPrint(e) {
+            e.preventDefault();
+            
+
+            let title = document.getElementById("noteTitle").value;
+            let description = document.getElementById("noteDescription").value;
+
+            let myObj = {
+                noteTitle : title,
+                noteDescription : description
+            };
+
+            axios.post("https://crudcrud.com/api/a2a63b38dfa4495e8359910a41abd514/applications",myObj)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
+            location.reload();
+
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+        axios.get(
+            "https://crudcrud.com/api/a2a63b38dfa4495e8359910a41abd514/applications")
+            .then((response) => {
+                console.log(response);
+                document.getElementById("totalNotes").innerHTML = response.data.length;
+
+                document.getElementById("showing").innerHTML = response.data.length;
+
+                for (var i = 0; i < response.data.length; i++) {
+                    let li = document.createElement("li");
+                    li.className = "notes-list";
+                    li.id = "lists";
+
+                    let para = document.createElement("p");
+                    para.appendChild(document.createTextNode(JSON.stringify(response.data[i])));
+                    li.appendChild(para);
+  
+                    let btn = document.createElement("button");
+                    btn.innerText = "delete";
+                    btn.type = "button";
+                    btn.className = "delete";
+                    li.appendChild(btn);
+                    document.getElementById("allNotes").appendChild(li);
+
+                    console.log("should");
+               }
+            })
+            .catch((err) => {
+                   console.log(err);
+            });
+      });
+       
+
+
+      document.getElementById("allNotes").addEventListener("click", deleteItem);
+
+      function deleteItem(e) {
+        if (e.target.classList.contains("delete")) {
+          let lit = e.target.parentElement;
+
+          let Obj = JSON.parse(lit.childNodes[0].innerText);
+
+          let key = Obj._id;
+          console.log(key);
+          axios
+            .delete(
+              `https://crudcrud.com/api/a2a63b38dfa4495e8359910a41abd514/applications/${key}`
+            )
+            .then((response) => {
+              console.log(response);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          document.getElementById("allNotes").removeChild(lit);
+        }
+      }
+
+      let search = document.getElementById("searchForm");
+      search.addEventListener('submit', results);
+
+      function results(e) {
+        e.preventDefault();
+        document.getElementById("allNotes").innerHTML = " ";
+        let text = document.getElementById("searchInput").value;
+        
+        axios.get(
+            "https://crudcrud.com/api/a2a63b38dfa4495e8359910a41abd514/applications")
+            .then((response) => {
+                //console.log(response);
+                let count = 0;
+                
+
+                for (var i = 0; i < response.data.length; i++) {
+                    let newTitle = response.data[i].noteTitle;
+                    console.log(newTitle);
+                    console.log(text);
+                    let position = newTitle.search(text);
+                    console.log(position);
+                    if(position >=0){
+                        console.log("working");
+                        count++;
+                    let li = document.createElement("li");
+                    li.className = "notes-list";
+                    li.id = "lists";
+
+                    let para = document.createElement("p");
+                    para.appendChild(document.createTextNode(JSON.stringify(response.data[i])));
+                    li.appendChild(para);
+  
+                    let btn = document.createElement("button");
+                    btn.innerText = "delete";
+                    btn.type = "button";
+                    btn.className = "delete";
+                    li.appendChild(btn);
+                    document.getElementById("allNotes").appendChild(li);
+
+                    
+                    }
+               }
+
+               document.getElementById("showing").innerHTML = count;
+            
+            })
+            .catch((err) => {
+                   console.log(err);
+            });
+
+      }
+
+    </script>
+  </body>
+</html>
